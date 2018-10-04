@@ -49,19 +49,19 @@
 
 ## 测试版信息查询访问
 
-**普通查询**
+### 普通查询
 
 	http://yourserver:3000/query?page=2
 
-**根据 title 关键字查询**
+### 根据 title 关键字查询
 
 	http://yourserver:3000/query/bykey?key=保研&page=2
 
-**根据信箱类型查询**
+### 根据信箱类型查询
 
 	http://yourserver:3000/query/bybox?box=组织部信箱&page=1
 
-**根据时间段查询**
+### 根据时间段查询
 
 	http://yourserver:3000/query/bytime?start_time=2018-9-28&end_time=2018-9-30&page=2
 
