@@ -39,11 +39,11 @@ npm install mysql
 		  |- query.js						# 回音壁信息查询
 		  |- test.js						# 测试
 	  |- node_modules
-	  |- public								# 静态文件
-	  |- routes								# 路由
+	  |- public							# 静态文件
+	  |- routes							# 路由
  	  |- views								
 	  |- app.js 							# 项目入口
-	  |- package.json                       # 依赖配置文件
+	  |- package.json                       			# 依赖配置文件
 
 ## 业务拓展
 
