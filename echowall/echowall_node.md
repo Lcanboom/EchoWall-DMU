@@ -1,4 +1,4 @@
-# echowall_data
+# EchoWall_data
 
 ## 环境
 
