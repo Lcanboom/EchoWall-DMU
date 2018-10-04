@@ -8,13 +8,15 @@
 
 ## 使用说明
 
-npm install -g express
+	npm install -g express
 
-cd echowall & npm install
+	cd echowall & npm install
 
-npm install mysql
+	npm install mysql
+	
+	npm start
 
-修改 /controller/function/dbconnection.js 的数据库连接信息
+启动前需要修改 /controller/function/dbconnection.js 的数据库连接信息
 
 	exports.connection = function() {
 		var result;
