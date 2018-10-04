@@ -2,7 +2,7 @@
 
 ## 环境
 
-- nodejs
+- Node.js
 - mysql
 - express
 
