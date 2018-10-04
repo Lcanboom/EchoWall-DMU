@@ -1,15 +1,21 @@
 /*
 	回音壁信息查询
-	@authors Carmel
+	@authors Carmelo
 */
 var express = require('express');
 var router = express.Router();
 var database = require('./function/dbconnection');
+var per_page_count = 10;
+var page;
+var start;
+var sql;
 
 // 处理get请求, 获得所有回音壁信息
 router.get('/', function(req, res) {
 	var connection = database.connection();
-	var  sql = 'SELECT * FROM echowall ORDER BY time DESC';
+	page = req.query.page;
+	start = (page - 1) * per_page_count;
+	sql = 'SELECT * FROM echowall ORDER BY time DESC limit ' + start + ', ' + per_page_count;
 	database.query(connection, null ,sql, res);
 });
 
@@ -17,7 +23,9 @@ router.get('/', function(req, res) {
 router.get('/bybox', function(req, res) {
 	var connection = database.connection();
 	var box_name = req.query.box;
-	var sql = "SELECT * FROM echowall WHERE box = ? ORDER BY time DESC";
+	page = req.query.page;
+	start = (page - 1) * per_page_count;
+	sql = "SELECT * FROM echowall WHERE box = ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, box_name, sql, res);
 });
 
@@ -26,7 +34,9 @@ router.get('/bytime', function(req, res) {
 	var connection = database.connection();
 	var start_time = req.query.start_time;
 	var end_time = req.query.end_time;
-	var sql = "SELECT * FROM echowall WHERE time between ? AND  ? ORDER BY time DESC";
+	page = req.query.page;
+	start = (page - 1) * per_page_count;
+	sql = "SELECT * FROM echowall WHERE time between ? AND  ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, [start_time, end_time], sql, res);
 });
 
@@ -34,7 +44,9 @@ router.get('/bytime', function(req, res) {
 router.get('/bykey', function(req, res) {
 	var connection = database.connection();
 	var title_key = '%' + req.query.key + '%';
-	var sql = "SELECT * FROM echowall WHERE title LIKE ? ORDER BY time DESC";
+	page = req.query.page;
+	start = (page - 1) * per_page_count;
+ 	sql = "SELECT * FROM echowall WHERE title LIKE ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, title_key, sql, res);
 });
 
