@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 	var connection = database.connection();
 	page = req.query.page;
 	start = (page - 1) * per_page_count;
-	sql = 'SELECT * FROM echowall ORDER BY time DESC limit ' + start + ', ' + per_page_count;
+	sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM echowall ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, null ,sql, res);
 });
 
@@ -25,7 +25,7 @@ router.get('/bybox', function(req, res) {
 	var box_name = req.query.box;
 	page = req.query.page;
 	start = (page - 1) * per_page_count;
-	sql = "SELECT * FROM echowall WHERE box = ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
+	sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM echowall WHERE box = ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, box_name, sql, res);
 });
 
@@ -36,7 +36,7 @@ router.get('/bytime', function(req, res) {
 	var end_time = req.query.end_time;
 	page = req.query.page;
 	start = (page - 1) * per_page_count;
-	sql = "SELECT * FROM echowall WHERE time between ? AND  ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
+	sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM echowall WHERE time between ? AND  ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, [start_time, end_time], sql, res);
 });
 
@@ -46,8 +46,17 @@ router.get('/bykey', function(req, res) {
 	var title_key = '%' + req.query.key + '%';
 	page = req.query.page;
 	start = (page - 1) * per_page_count;
- 	sql = "SELECT * FROM echowall WHERE title LIKE ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
+ 	sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM echowall WHERE title LIKE ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
 	database.query(connection, title_key, sql, res);
 });
+
+// 根据 id 获取指定回音壁信息
+router.get('/byid', function(req, res) {
+	var connection = database.connection();
+	var id =  req.query.id;
+ 	sql = "SELECT * FROM echowall WHERE id = ? ";
+	database.query(connection, id, sql, res);
+});
+
 
 module.exports = router;
