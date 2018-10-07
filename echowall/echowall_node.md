@@ -64,6 +64,10 @@
 ### 根据时间段查询
 
 	http://yourserver:3000/query/bytime?start_time=2018-9-28&end_time=2018-9-30&page=2
+	
+### 根据 id 获取指定回音壁信息
+
+	http://yourserver:3000/query/byid?id=xxxxxxxxxxxx
 
 
 ## 业务拓展
