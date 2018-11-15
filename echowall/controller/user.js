@@ -34,10 +34,8 @@ router.post('/login',function(req, res, next){
 					}
 					else
 						res.jsonp({
-					    	'status': 200,
-					    	'message':"openid already exits",
-					    	'sk': sk,
-					    	'userInfo': userInfo
+					    	'status': 500,
+					    	'message':"INSERT may failed",
 						})
 				}, (err) => {
 						res.jsonp(err);	
