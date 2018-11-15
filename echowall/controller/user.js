@@ -118,20 +118,6 @@ router.post('/getUserInfo',function(req, res, next) {
 	}, (error) => {
 		res.json(error);
 	})
-	/*
-	wechatCommunicate.getUserInfo(openid).then(userInfo => {
-		if (userInfo)
-			res.json(userInfo);
-		else{
-			res.json({
-		    	'status': 500,
-		    	'error': 'openid is not exits',					
-			})
-		}
-	}, (error) => {
-		res.json(error);
-	})
-	*/
 })
 
 module.exports = router;
