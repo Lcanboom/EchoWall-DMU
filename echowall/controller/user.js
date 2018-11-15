@@ -23,6 +23,7 @@ router.post('/login',function(req, res, next){
 			    var sql = "INSERT INTO userInfo set ?";
 			    var value = userInfo;
 				database.query(connection, value, sql).then((data) => {
+					console.log(data);
 					if (data) {
 				    	res.json({
 					        'openid': data['openid'],
@@ -33,8 +34,8 @@ router.post('/login',function(req, res, next){
 					}
 					else
 						res.jsonp({
-					    	'status': "500",
-					    	'message':"query error",
+					    	'status': "200",
+					    	'message':"openid already exits",
 						})
 				}, (err) => {
 						res.jsonp(err);	
