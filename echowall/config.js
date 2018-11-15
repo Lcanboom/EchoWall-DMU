@@ -5,7 +5,7 @@ var	host = 'localhost';
 // mysql 配置
 var mysql_user = 'root';
 var mysql_password = '521Loli';
-var mysql_database = 'echo'; 
+var mysql_database = 'test_echo'; 
 var mysql_port = 3306;
 
 // redis 配置

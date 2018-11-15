@@ -34,7 +34,7 @@ router.post('/login',function(req, res, next){
 					}
 					else
 						res.jsonp({
-					    	'status': "200",
+					    	'status': 200,
 					    	'message':"openid already exits",
 						})
 				}, (err) => {
