@@ -84,7 +84,6 @@ function getSqlArray(sql, params, connection) {
 }
 
 function transaction(pool, sqlArray) {
-	var that = this;
 	var SqlArray = [];
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
@@ -108,7 +107,7 @@ function transaction(pool, sqlArray) {
 				}
 				// 顺序实现 sql 语句，出错 rollback
 				for (var i = 0; i < sqlArray.length; i++) {
-					SqlArray.push(that.getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
+					SqlArray.push(getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
 				}
 
 				async.series(SqlArray, (err, result) => {
