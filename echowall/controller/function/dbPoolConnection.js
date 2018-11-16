@@ -15,6 +15,25 @@ function connection() {
 	return pool;
 }
 
+
+
+/*
+* 对事务的封装
+*/
+
+function getSqlParamEntity(sql, params, callback) {
+  if (callback) {
+    return callback(null, {
+      sql: sql,
+      params: params
+    });
+  }
+  return {
+    sql: sql,
+    params: params
+  };
+}
+
 function query(pool, values, sql) {
 	return new Promise( function(resolve, reject){
 		pool.getConnection(function(err, connection) {
@@ -57,24 +76,8 @@ function query(pool, values, sql) {
 	})	
 }
 
-/*
-* 对事务的封装
-*/
-
-function getSqlParamEntity(sql, params, callback) {
-  if (callback) {
-    return callback(null, {
-      sql: sql,
-      params: params
-    });
-  }
-  return {
-    sql: sql,
-    params: params
-  };
-}
-
 function transaction(pool, sqlArray) {
+	var that = this;
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {
@@ -99,7 +102,7 @@ function transaction(pool, sqlArray) {
 				for (var i = 0; i < sqlArray.length; i++) {
 					console.log(sqlArray[i].sql);
 					console.log(sqlArray[i].params);
-					query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
+					that.query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
 						connection.rollback( () => { reject(err) })
 					});
 				}
