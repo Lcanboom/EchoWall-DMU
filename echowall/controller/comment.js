@@ -94,7 +94,7 @@ router.post('/like',function(req, res, next){
 	var time = req.body.time;
 	var sqlArray = [];
 	var pool = database.connection();
-	var	sql_add_Commentlike;
+	var	sql_Commentlike;
 	wechatCommunicate.verifySk(sk).then(isVerified => {
 		if (isVerified) {
 			wechatCommunicate.getUserInfo(openid).then(result => {
