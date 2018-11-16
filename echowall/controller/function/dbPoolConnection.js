@@ -105,13 +105,13 @@ function transaction(pool, sqlArray) {
 					}					
 					reject(error);
 				}
-				// 顺序实现 sql 语句，出错 rollback
+				
 				for (var i = 0; i < sqlArray.length; i++) {
 					console.log(sqlArray[i].sql);
 					console.log(sqlArray[i].params);
 					SqlArray.push(getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
 				}
-
+				// 顺序实现 sql 语句，出错 rollback
 				async.series(SqlArray, (err, result) => {
 					if (err) {
 						console.log(err);
