@@ -74,7 +74,7 @@ function getSqlParamEntity(sql, params, callback) {
   };
 }
 
-function transaction(pool, sqlArray) {
+function transaction(pool, sqlArray, query) {
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {
@@ -99,7 +99,7 @@ function transaction(pool, sqlArray) {
 				for (var i = 0; i < sqlArray.length; i++) {
 					console.log(sqlArray[i].sql);
 					console.log(sqlArray[i].params);
-					query.call(this, pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
+					query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
 						connection.rollback( () => { reject(err) })
 					})
 				}
