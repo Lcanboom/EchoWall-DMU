@@ -76,16 +76,15 @@ function getSqlParamEntity(sql, params, callback) {
  	};
 }
 
-function getSqlArray(sql, params, connection) {
-	return function(callback) {
-  		connection.query(sql, params, function(err, result) {
-    	callback(err);
-  		})
-  	};
-}
-
 function transaction(pool, sqlArray) {
 	var SqlArray = [];
+	function getSqlArray(sql, params, connection) {
+			return function(callback) {
+				connection.query(sql, params, function(err, result) {
+				callback(err);
+				})
+			};
+	}
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {
