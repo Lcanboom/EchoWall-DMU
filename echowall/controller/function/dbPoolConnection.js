@@ -107,6 +107,8 @@ function transaction(pool, sqlArray) {
 				}
 				// 顺序实现 sql 语句，出错 rollback
 				for (var i = 0; i < sqlArray.length; i++) {
+					console.log(sqlArray[i].sql);
+					console.log(sqlArray[i].params);
 					SqlArray.push(getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
 				}
 
@@ -116,20 +118,10 @@ function transaction(pool, sqlArray) {
 						connection.rollback( (err) => { reject(err) });
 					}
 				})
-				/*
-				for (var i = 0; i < sqlArray.length; i++) {
-					(function(i){
-						console.log(sqlArray[i].sql);
-						console.log(sqlArray[i].params);
-						query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
-							connection.rollback( () => { reject(err) })
-						});
-					})(i);
-				}
-				*/
+
 				connection.commit( err => {
 					if (err) {
-						connection.rollback( () => { reject(err) } )
+						connection.rollback( (err) => { reject(err) } )
 					}
 				})
 				console.log('Transaction complete');
