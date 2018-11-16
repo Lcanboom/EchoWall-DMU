@@ -24,6 +24,7 @@ router.post('/add',function(req, res, next){
 	wechatCommunicate.verifySk(sk).then(isVerified => {
 		if (isVerified) {
 			wechatCommunicate.getUserInfo(openid).then(result => {
+				console.log(result);
 				if (Array.isArray(result['data']) && result['data'].length === 0){
 					error = {
 				    	'status': 500,
