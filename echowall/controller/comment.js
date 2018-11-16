@@ -25,7 +25,7 @@ router.post('/add',function(req, res, next){
 		if (isVerified) {
 			wechatCommunicate.getUserInfo(openid).then(result => {
 				console.log(result);
-				if (result == null){
+				if (Array.isArray(result) && result.length === 0){
 					error = {
 				    	'status': 500,
 				    	'error': 'openid is not exits',						
@@ -36,7 +36,7 @@ router.post('/add',function(req, res, next){
 					// 事件的事务组成
 					var sql_add_comment = "insert INTO comment set ?";
 					param = {
-						'userId': result['id'], 
+						'userId': result.id, 
 						'echoId': echoid,
 						'content': content,
 						'time': time

@@ -96,7 +96,7 @@ router.post('/getUserInfo',function(req, res, next) {
 	wechatCommunicate.verifySk(sk).then(isVerified => {
 		if (isVerified) {
 			wechatCommunicate.getUserInfo(openid).then(result => {
-				if (result == null){
+				if (Array.isArray(result) && result.length === 0){
 					error = {
 				    	'status': 500,
 				    	'error': 'openid is not exits',						
