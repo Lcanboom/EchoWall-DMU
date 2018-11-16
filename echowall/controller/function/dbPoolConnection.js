@@ -23,24 +23,19 @@ function query(pool, values, sql) {
 		  			'status': 500,
 		  			'error': 'not connected'
 		  		}
-		  		reject(error); 
+		  		resolve(error); 
 		  	} 	  		
 		  	// Use the connection
 			connection.query(sql, values, function (err, data) {
 			    var result;
 			    if(err){
-			    	result = {
+			    	error = {
 			    		'status': "500",
 			    		'message':"query error"
 			    	}
-			    	reject(result);
+			    	reject(error);
 			    }
 			    else{
-			    	result = {
-			    		'status': "200",
-			    		'message':"query success",
-			    		data: data
-			    	}
 					resolve(data);
 			    }
 			    // When done with the connection, release it.	    
@@ -56,12 +51,75 @@ function query(pool, values, sql) {
 			  		}
 			  		reject(error); 
 			    }
-
 			    // Don't use the connection here, it has been returned to the pool.	 	    
 			});
 		});
 	})	
 }
+
+/*
+* 对事务的封装
+*/
+
+function getSqlParamEntity(sql, params, callback) {
+  if (callback) {
+    return callback(null, {
+      sql: sql,
+      params: params
+    });
+  }
+  return {
+    sql: sql,
+    params: params
+  };
+}
+
+function transaction(pool, sqlArray) {
+	return new Promise( (resolve, reject) => {
+		pool.getConnection( (err, connection) => {
+			if (err) {
+				// get connection err
+				error = {
+					'status': 500,
+					'message': 'get connection err'					
+				}
+				resolve(error);		
+				return;
+			}
+			// 事务开始
+			connection.beginTransaction( (err) => {
+				if (err) {
+					error = {
+						'status': 500,
+						'message': 'beginTransaction err'					
+					}					
+					reject(error);
+				}
+				// 顺序实现 sql 语句，出错 rollback
+				for (var i = 0; i < sqlArray.length; i++) {
+					query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
+						connection.rollback( () => { reject(err) })
+					})
+				}
+				connection.commit( err => {
+					if (err) {
+						connection.rollback( () => { reject(err) } )
+					}
+				})
+				console.log('Transaction complete');
+				resolve({
+					'status': 200,
+					'message': 'Transaction complete'
+				})
+				connection.release();
+			})
+		})
+	})
+}
+
+/*
+* redis connect
+*/
 
 function redis_connection() {
 	var host = config.host;
@@ -85,3 +143,5 @@ exports.connection = connection;
 exports.query = query;
 exports.redis_connection = redis_connection;
 exports.redis_hash_set = redis_hash_set;
+exports.transaction = transaction;
+exports.getSqlParamEntity = getSqlParamEntity;

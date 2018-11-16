@@ -5,8 +5,8 @@
 
 var express = require('express');
 var router = express.Router();
-var database = require('./function/dbconnection');
-//var database = require('./function/dbPoolConnection');
+//var database = require('./function/dbconnection');
+var database = require('./function/dbPoolConnection');
 var wechatCommunicate = require('./function/wechatCommunicate.js');
 
 // 处理POST请求

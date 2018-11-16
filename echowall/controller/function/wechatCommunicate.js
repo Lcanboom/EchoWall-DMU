@@ -1,7 +1,7 @@
 var request = require('request');
 var crypto = require('crypto');
-var database = require('./dbconnection');
-//var database = require('./dbPoolConnection');
+//var database = require('./dbconnection');
+var database = require('./dbPoolConnection');
 var config = require('../../config');
 
 function getSessionIDandOpenid(code) {
