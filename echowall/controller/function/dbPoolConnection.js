@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var redis = require('redis');
 var config = require('../../config');
+var async = require('async');
 /**
  * Use mysql pool
  */
@@ -75,7 +76,6 @@ function getSqlParamEntity(sql, params, callback) {
   };
 }
 
-
 function transaction(pool, sqlArray) {
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
@@ -98,6 +98,13 @@ function transaction(pool, sqlArray) {
 					reject(error);
 				}
 				// 顺序实现 sql 语句，出错 rollback
+				async.series(sqlArray, (err, result) => {
+					if (err) {
+						console.log(err);
+						connection.rollback();
+					}
+				})
+				/*
 				for (var i = 0; i < sqlArray.length; i++) {
 					(function(i){
 						console.log(sqlArray[i].sql);
@@ -107,6 +114,7 @@ function transaction(pool, sqlArray) {
 						});
 					})(i);
 				}
+				*/
 				connection.commit( err => {
 					if (err) {
 						connection.rollback( () => { reject(err) } )
