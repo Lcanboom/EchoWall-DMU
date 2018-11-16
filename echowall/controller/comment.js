@@ -8,7 +8,7 @@ var router = express.Router();
 //var database = require('./function/dbconnection');
 var database = require('./function/dbPoolConnection');
 var wechatCommunicate = require('./function/wechatCommunicate.js');
-var param
+var param;
 
 /*
 * 添加评论
