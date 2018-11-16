@@ -74,7 +74,7 @@ function getSqlParamEntity(sql, params, callback) {
   };
 }
 
-function transaction(pool, sqlArray, query) {
+function transaction(pool, sqlArray) {
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {

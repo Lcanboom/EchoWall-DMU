@@ -55,7 +55,7 @@ router.post('/add',function(req, res, next){
 					param = { 'id': echoid };
 					sqlArray.push(database.getSqlParamEntity(sql_add_echoCommentCount, param));
 
-					database.transaction(pool, sqlArray, database.query()).then( (err, result) => {
+					database.transaction(pool, sqlArray).then( (err, result) => {
 						if (err) 
 							res.json(err);
 						else
