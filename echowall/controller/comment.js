@@ -159,4 +159,65 @@ router.post('/like',function(req, res, next){
 	})
 })
 
+router.post('/dislike',function(req, res, next){
+	var openid = req.body.openid;
+	var sk = req.body.sk;
+	var commentid = req.body.commentid;
+	var time = req.body.time;
+	var pool = database.connection();
+	wechatCommunicate.verifySk(sk).then(isVerified => {
+		if (isVerified) {
+			wechatCommunicate.getUserInfo(openid).then(result => {
+				console.log(result);
+				if (Array.isArray(result) && result.length === 0){
+					error = {
+				    	'status': 500,
+				    	'error': 'openid is not exits',						
+					}
+					res.json(error);
+				}					
+				else {
+					// 事件的事务组成
+					var sql_dislike_userAction = "insert INTO userAction set ?";
+					param = {
+						'userId': result[0].id, 
+						'commentId': commentid,
+						'actionType': 'dislike',
+						'time': time
+					};
+					sqlArray.push(database.getSqlParamEntity(sql_dislike_userAction, param));
+					
+					var	sql_commentDislike = "update comment set dislikeNum = dislikeNum + 1 where ?";
+					param = { 'id': commentid };
+					sqlArray.push(database.getSqlParamEntity(sql_commentDislike, param));
+
+					database.transaction(pool, sqlArray).then( (err, result) => {
+						if (err) 
+							res.json(err);
+						else
+							res.json(result);
+						sqlArray = [];
+					}, (err) => {
+						res.json({
+							'status': 500,
+							'message': 'rollback errorr'
+						})
+					})
+				}
+			}, (error) => {
+				res.json(error);
+			})
+		}
+		else {
+				error = {
+			    	'status': 500,
+			    	'error': 'sk is not exits',						
+				}
+				res.json(error);
+		}
+	}, (error) => {
+		res.json(error);
+	})
+})
+
 module.exports = router;
