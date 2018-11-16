@@ -63,8 +63,7 @@ function query(pool, values, sql) {
 * 对事务的封装
 */
 
-function getSqlParamEntity(sql, params, connection, callback) {
-	/*
+function getSqlParamEntity(sql, params, callback) {
   	if (callback) {
     	return callback(null, {
       	sql: sql,
@@ -75,8 +74,10 @@ function getSqlParamEntity(sql, params, connection, callback) {
     	sql: sql,
     	params: params
  	};
- 	*/
- 	return function(callback) {
+}
+
+function getSqlArray(sql, params, connection) {
+	return function(callback) {
   		connection.query(sql, params, function(err, result) {
     	callback(err);
   		})
@@ -84,6 +85,7 @@ function getSqlParamEntity(sql, params, connection, callback) {
 }
 
 function transaction(pool, sqlArray) {
+	var SqlArray = [];
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {
@@ -105,10 +107,14 @@ function transaction(pool, sqlArray) {
 					reject(error);
 				}
 				// 顺序实现 sql 语句，出错 rollback
-				async.series(sqlArray, (err, result) => {
+				for (var i = 0; i < sqlArray.length; i++) {
+					SqlArray.push(this.getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
+				}
+
+				async.series(SqlArray, (err, result) => {
 					if (err) {
 						console.log(err);
-						connection.rollback();
+						connection.rollback( (err) => { reject(err) });
 					}
 				})
 				/*
