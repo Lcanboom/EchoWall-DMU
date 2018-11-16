@@ -90,6 +90,7 @@ router.post('/like',function(req, res, next){
 	var sk = req.body.sk;
 	var commentid = req.body.commentid;
 	var flag = req.body.flag;
+	console.log(flag);
 	var time = req.body.time;
 	var sqlArray = [];
 	var pool = database.connection();
