@@ -34,6 +34,7 @@ router.post('/add',function(req, res, next){
 				}					
 				else {
 					// 事件的事务组成
+					/*
 					var sql_add_comment = "insert INTO comment set ?";
 					param = {
 						'userId': result[0].id, 
@@ -51,7 +52,7 @@ router.post('/add',function(req, res, next){
 						'time': time
 					};
 					sqlArray.push(database.getSqlParamEntity(sql_add_userAction, param));
-					
+					*/
 					var	sql_add_echoCommentCount = "update echowall set commentCount = commentCount + 1 where id = ?"
 					param = { 'id': echoid };
 					sqlArray.push(database.getSqlParamEntity(sql_add_echoCommentCount, param));
