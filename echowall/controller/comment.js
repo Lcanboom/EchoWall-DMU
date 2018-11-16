@@ -9,6 +9,7 @@ var router = express.Router();
 var database = require('./function/dbPoolConnection');
 var wechatCommunicate = require('./function/wechatCommunicate.js');
 var param;
+var sqlArray = [];
 
 /*
 * 添加评论
@@ -19,7 +20,6 @@ router.post('/add',function(req, res, next){
 	var echoid = req.body.echoid;
 	var content = req.body.content;
 	var time = req.body.time;
-	var sqlArray = [];
 	var pool = database.connection();
 	wechatCommunicate.verifySk(sk).then(isVerified => {
 		if (isVerified) {
@@ -92,9 +92,9 @@ router.post('/like',function(req, res, next){
 	var flag = req.body.flag;
 	console.log(flag);
 	var time = req.body.time;
-	var sqlArray = [];
 	var pool = database.connection();
 	var	sql_Commentlike;
+	var actionType;
 	wechatCommunicate.verifySk(sk).then(isVerified => {
 		if (isVerified) {
 			wechatCommunicate.getUserInfo(openid).then(result => {
@@ -108,19 +108,24 @@ router.post('/like',function(req, res, next){
 				}					
 				else {
 					// 事件的事务组成
+					if (flag) {
+						actionType = 'like_do';
+						sql_Commentlike = "update comment set likeNum = likeNum + 1 where ?";						
+					}
+					else{
+						actionType = 'like_undo';						
+						sql_Commentlike = "update comment set likeNum = likeNum - 1 where ?";												
+					}
+
 					var sql_add_userAction = "insert INTO userAction set ?";
 					param = {
 						'userId': result[0].id, 
 						'commentId': commentid,
-						'actionType': 'like',
+						'actionType': actionType,
 						'time': time
 					};
 					sqlArray.push(database.getSqlParamEntity(sql_add_userAction, param));
-					
-					if (flag) 
-						sql_Commentlike = "update comment set likeNum = likeNum + 1 where ?";
-					else
-						sql_Commentlike = "update comment set likeNum = likeNum - 1 where ?";						
+										
 					param = { 'id': commentid };
 					sqlArray.push(database.getSqlParamEntity(sql_Commentlike, param));
 
