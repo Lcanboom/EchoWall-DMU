@@ -57,10 +57,6 @@ function query(pool, values, sql) {
 	})	
 }
 
-function test() {
-	console.log('a');
-}
-
 
 /*
 * 对事务的封装
@@ -108,7 +104,6 @@ function transaction(pool, sqlArray) {
 					this.query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
 						connection.rollback( () => { reject(err) })
 					});
-					this.test();
 				}
 				connection.commit( err => {
 					if (err) {
