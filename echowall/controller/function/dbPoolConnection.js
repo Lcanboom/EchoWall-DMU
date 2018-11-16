@@ -99,33 +99,7 @@ function transaction(pool, sqlArray) {
 				for (var i = 0; i < sqlArray.length; i++) {
 					console.log(sqlArray[i].sql);
 					console.log(sqlArray[i].params);
-					connection.query(sqlArray[i].sql, sqlArray[i].params, function (err, data) {
-			    		var result;
-			    		if(err){
-			    			error = {
-			    				'status': "500",
-			    				'message':"query error"
-			    			}
-			    			reject(error);
-			    		}
-			    		else{
-							resolve(data);
-			    		}
-			    		// When done with the connection, release it.	    
-
-			    		connection.release();
-			    
-			    		// Handle error after the release.
-
-			    		if (err) {
-			  				error = {
-			  					'status': 500,
-			  					'error': 'Handle error after the release'
-			  				}
-			  				reject(error); 
-			    		}
-			    		// Don't use the connection here, it has been returned to the pool.	 	    
-					}).catch( (err) => {
+					query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
 						connection.rollback( () => { reject(err) })
 					});
 				}
