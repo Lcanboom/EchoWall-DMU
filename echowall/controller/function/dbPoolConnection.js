@@ -101,8 +101,8 @@ function transaction(pool, sqlArray) {
 				for (var i = 0; i < sqlArray.length; i++) {
 					console.log(sqlArray[i].sql);
 					console.log(sqlArray[i].params);
-					var query = new query(pool, sqlArray[i].params, sqlArray[i].sql);
-					query.catch( (err) => {
+					var queryaction = new query(pool, sqlArray[i].params, sqlArray[i].sql);
+					queryaction.catch( (err) => {
 						connection.rollback( () => { reject(err) })
 					});
 				}
