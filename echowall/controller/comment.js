@@ -53,8 +53,8 @@ router.post('/add',function(req, res, next){
 					};
 					sqlArray.push(database.getSqlParamEntity(sql_add_userAction, param));
 					*/
-					var	sql_add_echoCommentCount = "update echowall set commentCount = commentCount + 1 where id = ?"
-					param = { 'id': echoid };
+					var	sql_add_echoCommentCount = "update echowall set commentCount = commentCount + 1 where id = " + echoid;
+					//param = { 'id': echoid };
 					sqlArray.push(database.getSqlParamEntity(sql_add_echoCommentCount, param));
 
 					database.transaction(pool, sqlArray).then( (err, result) => {
