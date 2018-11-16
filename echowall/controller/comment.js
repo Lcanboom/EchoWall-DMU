@@ -33,7 +33,7 @@ router.post('/add',function(req, res, next){
 				}					
 				else {
 					// 事件的事务组成
-					var sql_add_comment = "insert comment set ?";
+					var sql_add_comment = "insert INTO comment set ?";
 					param = {
 						'userId': openid, 
 						'echoId': echoid,
@@ -42,7 +42,7 @@ router.post('/add',function(req, res, next){
 					};
 					sqlArray.push(database.getSqlParamEntity(sql_add_comment, param));
 					
-					var sql_add_userAction = "insert userAction set ?";
+					var sql_add_userAction = "insert INTO userAction set ?";
 					param = {
 						'userId': openid, 
 						'echoId': echoid,
