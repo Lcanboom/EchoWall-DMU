@@ -64,16 +64,23 @@ function query(pool, values, sql) {
 */
 
 function getSqlParamEntity(sql, params, callback) {
-  if (callback) {
-    return callback(null, {
-      sql: sql,
-      params: params
-    });
-  }
-  return {
-    sql: sql,
-    params: params
-  };
+	/*
+  	if (callback) {
+    	return callback(null, {
+      	sql: sql,
+      	params: params
+    	});
+  	}
+  	return {
+    	sql: sql,
+    	params: params
+ 	};
+ 	*/
+ 	return function(callback) {
+  		connection.query(sql, params, function(err, result) {
+    	callback(err);
+  		})
+  	};
 }
 
 function transaction(pool, sqlArray) {
