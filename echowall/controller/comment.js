@@ -35,7 +35,7 @@ router.post('/add',function(req, res, next){
 					// 事件的事务组成
 					var sql_add_comment = "insert INTO comment set ?";
 					param = {
-						'userId': openid, 
+						'userId': result['data']['id'], 
 						'echoId': echoid,
 						'content': content,
 						'time': time
@@ -44,7 +44,7 @@ router.post('/add',function(req, res, next){
 					
 					var sql_add_userAction = "insert INTO userAction set ?";
 					param = {
-						'userId': openid, 
+						'userId': result['data']['id'], 
 						'echoId': echoid,
 						'actionType': 'commit',
 						'time': time
