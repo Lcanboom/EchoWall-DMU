@@ -62,6 +62,7 @@ router.post('/add',function(req, res, next){
 							res.json(err);
 						else
 							res.json(result);
+						sqlArray = [];
 					}, (err) => {
 						res.json({
 							'status': 500,
@@ -134,6 +135,7 @@ router.post('/like',function(req, res, next){
 							res.json(err);
 						else
 							res.json(result);
+						sqlArray = [];
 					}, (err) => {
 						res.json({
 							'status': 500,
