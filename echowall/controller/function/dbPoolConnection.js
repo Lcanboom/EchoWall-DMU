@@ -81,7 +81,6 @@ function getSqlParamEntity(sql, params, callback) {
 
 
 function transaction(pool, sqlArray) {
-	var that = this;
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {
@@ -109,7 +108,6 @@ function transaction(pool, sqlArray) {
 					that.query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
 						connection.rollback( () => { reject(err) })
 					});
-					that.test();
 					this.test();
 				}
 				connection.commit( err => {
