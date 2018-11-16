@@ -20,6 +20,7 @@ router.post('/add',function(req, res, next){
 	var content = req.body.content;
 	var time = req.body.time;
 	var sqlArray = [];
+	var pool = database.connection();
 	wechatCommunicate.verifySk(sk).then(isVerified => {
 		if (isVerified) {
 			wechatCommunicate.getUserInfo(openid).then(result => {
