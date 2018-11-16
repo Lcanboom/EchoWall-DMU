@@ -63,7 +63,7 @@ function query(pool, values, sql) {
 * 对事务的封装
 */
 
-function getSqlParamEntity(sql, params, ,connection, callback) {
+function getSqlParamEntity(sql, params, connection, callback) {
 	/*
   	if (callback) {
     	return callback(null, {
