@@ -58,7 +58,6 @@ function query(pool, values, sql) {
 	})	
 }
 
-
 /*
 * 对事务的封装
 */
@@ -76,15 +75,17 @@ function getSqlParamEntity(sql, params, callback) {
  	};
 }
 
+function getSqlArray(sql, params, connection) {
+	return function(callback) {
+		connection.query(sql, params, function(err, result) {
+		callback(err);
+		})
+	};
+}
+
 function transaction(pool, sqlArray) {
+	var that = this;
 	var SqlArray = [];
-	function getSqlArray(sql, params, connection) {
-			return function(callback) {
-				connection.query(sql, params, function(err, result) {
-				callback(err);
-				})
-			};
-	}
 	return new Promise( (resolve, reject) => {
 		pool.getConnection( (err, connection) => {
 			if (err) {
@@ -107,7 +108,7 @@ function transaction(pool, sqlArray) {
 				}
 				// 顺序实现 sql 语句，出错 rollback
 				for (var i = 0; i < sqlArray.length; i++) {
-					SqlArray.push(this.getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
+					SqlArray.push(that.getSqlArray(sqlArray[i].sql, sqlArray[i].params, connection));
 				}
 
 				async.series(SqlArray, (err, result) => {
