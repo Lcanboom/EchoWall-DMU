@@ -17,3 +17,5 @@ router.post('/add',function(req, res, next){
 		'fuck': 'you'
 	})
 })
+
+module.exports = router;
