@@ -99,9 +99,9 @@ function transaction(pool, sqlArray) {
 				}
 				// 顺序实现 sql 语句，出错 rollback
 				for (var i = 0; i < sqlArray.length; i++) {
-					console.log(sqlArray[i].sql);
-					console.log(sqlArray[i].params);
 					(function(i){
+						console.log(sqlArray[i].sql);
+						console.log(sqlArray[i].params);
 						query(pool, sqlArray[i].params, sqlArray[i].sql).catch( (err) => {
 							connection.rollback( () => { reject(err) })
 						});
