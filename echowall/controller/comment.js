@@ -139,7 +139,7 @@ router.get('/list',function(req, res, next){
 	var echoId = req.query.echoid;
 	page = req.query.page;
 	start = (page - 1) * per_page_count;
-	sql = "SELECT comment.id, NickName comment_username, avatarUrl comment_userAvatarUrl, content, likeNum, dislikeNum, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM comment, userInfo " 
+	sql = "SELECT comment.id comment_id, NickName comment_username, avatarUrl comment_userAvatarUrl, content, likeNum, dislikeNum, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM comment, userInfo " 
 		+  "where echoId = ? AND userInfo.id = comment.userId " + "ORDER BY time DESC limit " + start + ", " + per_page_count;
 	database.query(connection, echoId, sql).then((data) => {
 		if (data)
