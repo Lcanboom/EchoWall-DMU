@@ -1,5 +1,5 @@
-var database = require('./function/dbPoolConnection');
-var wechatCommunicate = require('./function/wechatCommunicate.js');
+var database = require('./dbPoolConnection');
+var wechatCommunicate = require('./wechatCommunicate.js');
 var param;
 
 function userTransaction(sk, openid, sqlArray) {
