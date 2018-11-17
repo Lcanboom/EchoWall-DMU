@@ -3,6 +3,7 @@ var wechatCommunicate = require('./wechatCommunicate.js');
 var param;
 
 function userTransaction(sk, openid, sqlArray) {
+	var pool = database.connection();
 	return new Promise( (resolve, reject) => {
 		wechatCommunicate.verifySk(sk).then(isVerified => {
 			if (isVerified) {
