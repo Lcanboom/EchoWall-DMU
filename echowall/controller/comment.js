@@ -21,6 +21,7 @@ var sql;
 */
 router.post('/add',function(req, res, next){
 	var userId = req.body.userid;
+	console.log(userId);
 	var openid = req.body.openid;
 	var sk = req.body.sk;
 	var echoid = req.body.echoid;
