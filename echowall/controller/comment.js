@@ -10,6 +10,10 @@ var database = require('./function/dbPoolConnection');
 var wechatCommunicate = require('./function/wechatCommunicate.js');
 var param;
 var sqlArray = [];
+var per_page_count = 10;
+var page;
+var start;
+var sql;
 
 /*
 * 添加评论
@@ -218,6 +222,28 @@ router.post('/dislike',function(req, res, next){
 	}, (error) => {
 		res.json(error);
 	})
+})
+
+/*
+* 获取某 id 的回音壁信息的评论列表
+*/
+router.get('/list',function(req, res, next){
+	var connection = database.connection();
+	var echoId = req.query.echoid;
+	page = req.query.page;
+	start = (page - 1) * per_page_count;
+	sql = "SELECT userId, content, likeNum, dislikeNum, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM comment where echoId = ? ORDER BY time DESC limit " + start + ', ' + per_page_count;
+	database.query(connection, echoId, sql).then((data) => {
+		if (data)
+			res.jsonp(data);
+		else
+			res.jsonp({
+		    	'status': "500",
+		    	'message':"query error",
+			})
+	}, (err) => {
+			res.jsonp(err);	
+	});
 })
 
 module.exports = router;
