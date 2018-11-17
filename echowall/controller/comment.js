@@ -7,7 +7,8 @@ var express = require('express');
 var router = express.Router();
 //var database = require('./function/dbconnection');
 var database = require('./function/dbPoolConnection');
-var wechatCommunicate = require('./function/wechatCommunicate.js');
+var wechatCommunicate = require('./function/wechatCommunicate');
+var userCommon = require('./function/userCommon');
 var param;
 var sqlArray = [];
 var per_page_count = 10;
@@ -25,69 +26,37 @@ router.post('/add',function(req, res, next){
 	var content = req.body.content;
 	var time = req.body.time;
 	var pool = database.connection();
-	wechatCommunicate.verifySk(sk).then(isVerified => {
-		if (isVerified) {
-			wechatCommunicate.getUserInfo(openid).then(result => {
-				console.log(result);
-				if (Array.isArray(result) && result.length === 0){
-					error = {
-				    	'status': 500,
-				    	'error': 'openid is not exits',						
-					}
-					res.json(error);
-				}					
-				else {
-					// 事件的事务组成
+	// 事务组成
+	var sql_add_comment = "insert INTO comment set ?";
+	param = {
+				'userId': result[0].id, 
+				'echoId': echoid,
+				'content': content,
+				'time': time
+			};
+	sqlArray.push(database.getSqlParamEntity(sql_add_comment, param));
 					
-					var sql_add_comment = "insert INTO comment set ?";
-					param = {
-						'userId': result[0].id, 
-						'echoId': echoid,
-						'content': content,
-						'time': time
-					};
-					sqlArray.push(database.getSqlParamEntity(sql_add_comment, param));
+	var sql_add_userAction = "insert INTO userAction set ?";
+	param = {
+				'userId': result[0].id, 
+				'echoId': echoid,
+				'actionType': 'commit',
+				'time': time
+			};
+	sqlArray.push(database.getSqlParamEntity(sql_add_userAction, param));
 					
-					var sql_add_userAction = "insert INTO userAction set ?";
-					param = {
-						'userId': result[0].id, 
-						'echoId': echoid,
-						'actionType': 'commit',
-						'time': time
-					};
-					sqlArray.push(database.getSqlParamEntity(sql_add_userAction, param));
-					
-					var	sql_add_echoCommentCount = "update echowall set commentCount = commentCount + 1 where ?";
-					param = { 'id': echoid };
-					sqlArray.push(database.getSqlParamEntity(sql_add_echoCommentCount, param));
+	var	sql_add_echoCommentCount = "update echowall set commentCount = commentCount + 1 where ?";
+	param = { 'id': echoid };
+	sqlArray.push(database.getSqlParamEntity(sql_add_echoCommentCount, param));
 
-					database.transaction(pool, sqlArray).then( (err, result) => {
-						if (err) 
-							res.json(err);
-						else
-							res.json(result);
-						sqlArray = [];
-					}, (err) => {
-						res.json({
-							'status': 500,
-							'message': 'rollback errorr'
-						})
-					})
-				}
-			}, (error) => {
-				res.json(error);
-			})
-		}
-		else {
-				error = {
-			    	'status': 500,
-			    	'error': 'sk is not exits',						
-				}
-				res.json(error);
-		}
+	userCommon.userTransaction(sk, openid, sqlArray).then((result) => {
+		if (result) 
+			res.json(result);
 	}, (error) => {
 		res.json(error);
-	})
+	});
+
+
 })
 
 router.post('/like',function(req, res, next){
