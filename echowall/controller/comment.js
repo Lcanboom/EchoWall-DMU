@@ -233,7 +233,7 @@ router.get('/list',function(req, res, next){
 	page = req.query.page;
 	start = (page - 1) * per_page_count;
 	sql = "SELECT comment.id, NickName comment_username, avatarUrl comment_userAvatarUrl, content, likeNum, dislikeNum, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM comment, userInfo " 
-		+  "where echoId = ? AND userInfo.id = comment.userId" + "ORDER BY time DESC limit " + start + ', ' + per_page_count;
+		+  "where echoId = ? AND userInfo.id = comment.userId";
 	database.query(connection, echoId, sql).then((data) => {
 		if (data)
 			res.jsonp(data);
