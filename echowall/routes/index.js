@@ -21,7 +21,8 @@ module.exports = function(app){
     app.use('/user', user);
 
     var comment = require('../controller/comment');
-    app.use('/comment', comment);  
+    app.use('/comment', comment);
 
-
+    var my = require('../controller/my');
+    app.use('/my', my);   
 };
