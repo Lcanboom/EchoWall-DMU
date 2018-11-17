@@ -56,6 +56,8 @@ router.post('/add',function(req, res, next){
 	}, (error) => {
 		res.json(error);
 	});
+
+	sqlArray = [];		// 情空事务数组
 })
 
 router.post('/like',function(req, res, next){
@@ -95,6 +97,8 @@ router.post('/like',function(req, res, next){
 	}, (error) => {
 		res.json(error);
 	});
+
+	sqlArray = [];		// 情空事务数组
 })
 
 router.post('/dislike',function(req, res, next){
@@ -123,6 +127,8 @@ router.post('/dislike',function(req, res, next){
 	}, (error) => {
 		res.json(error);
 	});
+
+	sqlArray = [];		// 情空事务数组
 })
 
 /*
