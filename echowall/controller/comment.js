@@ -248,5 +248,3 @@ router.get('/list',function(req, res, next){
 })
 
 module.exports = router;
-
-SELECT comment.id, NickName comment_username, avatarUrl comment_userAvatarUrl, content, likeNum, dislikeNum, date_format(time, '%Y-%m-%d %H:%i:%s') time FROM comment, userInfo where echoId = 66707131 AND userInfo.id = comment.userId
