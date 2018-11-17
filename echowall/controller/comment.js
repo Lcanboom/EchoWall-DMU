@@ -20,6 +20,7 @@ var sql;
 * 添加评论
 */
 router.post('/add',function(req, res, next){
+	var userId = req.body.userid;
 	var openid = req.body.openid;
 	var sk = req.body.sk;
 	var echoid = req.body.echoid;
@@ -29,7 +30,7 @@ router.post('/add',function(req, res, next){
 	// 事务组成
 	var sql_add_comment = "insert INTO comment set ?";
 	param = {
-				'userId': result[0].id, 
+				'userId': userId, 
 				'echoId': echoid,
 				'content': content,
 				'time': time
@@ -38,7 +39,7 @@ router.post('/add',function(req, res, next){
 					
 	var sql_add_userAction = "insert INTO userAction set ?";
 	param = {
-				'userId': result[0].id, 
+				'userId': userId, 
 				'echoId': echoid,
 				'actionType': 'commit',
 				'time': time
