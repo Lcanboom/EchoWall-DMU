@@ -1,3 +1,7 @@
+/*
+*	与微信服务相关的处理
+*/
+
 var request = require('request');
 var crypto = require('crypto');
 //var database = require('./dbconnection');
