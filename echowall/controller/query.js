@@ -128,7 +128,7 @@ router.get('/byid', function(req, res) {
 	database.query(connection, id, sql).then((data) => {
 		if (data) {
 			// 判断 redis 有序集合中是否已经存在该回音壁的 id 信息
-			database.redis_zscore(redis_client, zset, id).then((err, result) => {
+			database.redis_zscore(redis_client, zset, id).then((result) => {
 				if (result)
 					redis_client.zincrby(zset, 1, id, function(err, ret){
 						if (err) {
@@ -150,6 +150,8 @@ router.get('/byid', function(req, res) {
 						}
 					});
 				redis_client.quit();
+			}, (err) =>{
+				res.jsonp(err);
 			})
 		}
 		else
