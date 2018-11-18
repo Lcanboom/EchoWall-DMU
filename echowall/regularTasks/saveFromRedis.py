@@ -24,9 +24,7 @@ def get_from_redis(client):
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
-		increase = str(item[1], encoding="utf-8")
 		print(id)
-		print(increase)
 	pass
 
 
