@@ -23,6 +23,10 @@ def get_from_redis(client):
 	view_last_twoWeek = client.zrange("view_last_twoWeek", 0, -1, withscores=True)
 	for item in view_last_twoWeek:
 		print(item)
+		id = str(item[0], encoding="utf-8")
+		increase = str(item[1], encoding="utf-8")
+		print(id)
+		print(increase)
 	pass
 
 
