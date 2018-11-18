@@ -24,8 +24,10 @@ router.get('/byview', function(req, res){
 	database.redis_zrevrangebyscore(redis_client, zset).then((hotlist) => {
 		hotlist = arrayToString(hotlist);
 		console.log(hotlist);
+		var hot = [hotlist, hotlist];
+		console.log(hot);
 		sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time from echowall where id in (?) order by FIELD(id, ?) LIMIT " + start + ', ' + per_page_count; 
-		database.query(pool, [hotlist, hotlist], sql).then((data) => {
+		database.query(pool, hot, sql).then((data) => {
 			if (data)
 				res.jsonp(data);
 			else
