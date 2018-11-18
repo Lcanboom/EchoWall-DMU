@@ -23,10 +23,10 @@ router.get('/byview', function(req, res){
 	// 获取缓存中有序集合的 id 列表
 	database.redis_zrevrangebyscore(redis_client, zset).then((hotlist) => {
 		hotlist = arrayToString(hotlist);
-		console.log(hotlist);
 		sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time from echowall where id in (" + hotlist +
-		") order by FIELD(id, " + hotlist + ") LIMIT " + start + ', ' + per_page_count; 
-		database.query(pool, null, sql).then((data) => {
+		") order by FIELD(id,?) LIMIT " + start + ', ' + per_page_count; 
+		console.log(sql);
+		database.query(pool, hotlist, sql).then((data) => {
 			if (data)
 				res.jsonp(data);
 			else
