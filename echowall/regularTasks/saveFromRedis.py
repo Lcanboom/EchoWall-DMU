@@ -10,11 +10,11 @@ def save_to_mysql(db, parms):
 	cursor = db.cursor()
 	sql = "UPDATE echowall SET viewCount = viewCount + %s WHERE id = %s" 
 	try:
-	   # 执行sql语句
-	   reCount = cursor.execute(sql, (3, '66707131'))
-	   print(reCount)
-	   # 执行sql语句
-	   db.commit()
+		# 执行sql语句
+		reCount = cursor.execute(sql, parms)
+		print(reCount)
+		# 执行sql语句
+		db.commit()
 	except:
 		# 发生错误时回滚
 		db.rollback()
@@ -24,12 +24,13 @@ def get_from_redis(client):
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
-		print((item[1]))
-		print(id)
+		increase = item[1]
+		save_to_mysql(db, (increase, id))
 	pass
 
 
 def main():
 	get_from_redis(r)
-
+	db.close()
+	
 main()
