@@ -14,8 +14,8 @@ router.get('/byview', function(req, res){
 	var connection = database.connection();
 	var redis_client = database.redis_connection();
 	database.redis_zrevrangebyscore(redis_client, zset).then((result) => {
-		console.log(result);
-		res.jsonp(result);
+		console.log(result.join());
+		res.jsonp(result.join());
 	})
 	redis_client.quit();
 });
