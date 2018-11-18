@@ -17,9 +17,9 @@ try:
    # 执行sql语句
    db.commit()
 except MySQLdb.Error as e:
-    print('Error:%s' % e)
-   	# 发生错误时回滚
-   	db.rollback()
+	print('Error:%s' % e)
+	# 发生错误时回滚
+	db.rollback()
  
 # 关闭数据库连接
 db.close()
