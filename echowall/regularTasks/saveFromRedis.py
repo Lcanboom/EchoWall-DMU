@@ -16,9 +16,10 @@ try:
    cursor.execute(sql)
    # 执行sql语句
    db.commit()
-except:
-   # 发生错误时回滚
-   db.rollback()
+except MySQLdb.Error as e:
+    print('Error:%s' % e)
+   	# 发生错误时回滚
+   	db.rollback()
  
 # 关闭数据库连接
 db.close()
