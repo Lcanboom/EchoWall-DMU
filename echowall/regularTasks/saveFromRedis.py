@@ -19,7 +19,7 @@ def save_to_mysql(db, parms):
 		# 执行sql语句
 		reCount = cursor.execute(sql, parms)
 		print(reCount)
-		result = "共更新mysql条数：" + reCount + "  " + time.asctime(time.localtime(time.time()));
+		result = "共更新mysql条数：" + str(reCount) + "  " + time.asctime(time.localtime(time.time()));
 		print(result)
 		write_to_file(result)
 		# 执行sql语句
