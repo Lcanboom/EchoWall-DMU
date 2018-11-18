@@ -24,6 +24,7 @@ def get_from_redis(client):
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
+		print(type(item[1]))
 		print(id)
 	pass
 
