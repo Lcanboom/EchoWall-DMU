@@ -16,8 +16,7 @@ try:
    cursor.execute(sql, (3, "66707131"))
    # 执行sql语句
    db.commit()
-except MySQLdb.Error as e:
-	print('Error:%s' % e)
+except:
 	# 发生错误时回滚
 	db.rollback()
  
