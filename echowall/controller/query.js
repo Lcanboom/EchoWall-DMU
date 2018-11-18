@@ -185,7 +185,7 @@ router.get('/hotlist', function(req, res){
 		console.log(result);
 		res.jsonp(result);
 	})
-	redis_client.quit()；
+	redis_client.quit();
 });
 
 
