@@ -11,7 +11,6 @@ r = redis.StrictRedis(connection_pool=pool)
  
 def write_to_file(content):
 	time = datetime.datetime.now().date()
-	print(time)
 	with open("/home/Carmelo/Lcanboom/echowall/regularTasks/insertlog/{time}.txt".format(time=time), 'a', encoding='utf-8') as f:
 		f.write(content + '\n')
 
