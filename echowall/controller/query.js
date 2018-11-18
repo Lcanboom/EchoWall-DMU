@@ -46,7 +46,7 @@ router.post('/bybox', function(req, res, next) {
 	if (box_name === "其他") {
 		var box_types = req.body.types;
 		box_types = common.arrayToString(box_types)		// 格式化数组
-
+		console.log(box_types);
 		sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time \
 			FROM echowall WHERE box not in (" + box_types + ")\
 			ORDER BY time DESC limit " + start + ', ' + per_page_count;

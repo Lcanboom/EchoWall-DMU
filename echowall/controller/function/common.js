@@ -4,8 +4,8 @@
 
 
 function arrayToString(array) {
-	return array.reduce((item) => {
-			return  "," + '\'' + item + '\'';
+	return array.reduce((acc, item) => {
+			return  acc + "," + '\'' + item + '\'';
 			}, '\'' + array[0] + '\'');
 }
 
