@@ -9,8 +9,8 @@ r = redis.StrictRedis(connection_pool=pool)
  
 def write_to_file(content):
 	time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
-    with open('/home/Carmelo/Lcanboom/echowall/regularTasks/insertlog/{time}.txt'.format(time=time), 'a', encoding='utf-8') as f:
-        f.write(content + '\n')
+	with open('/home/Carmelo/Lcanboom/echowall/regularTasks/insertlog/{time}.txt'.format(time=time), 'a', encoding='utf-8') as f:
+		f.write(content + '\n')
 
 def save_to_mysql(db, parms):
 	# 使用cursor()方法获取操作游标 
