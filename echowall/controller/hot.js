@@ -20,9 +20,9 @@ router.get('/byview', function(req, res){
 		hotlist = common.arrayToString(hotlist);
 		console.log(hotlist);
 		sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time from echowall where id in (" + hotlist +
-		") order by FIELD(id,?) LIMIT " + start + ', ' + per_page_count; 
+		") order by FIELD(id, "+ hotlist + ") LIMIT " + start + ', ' + per_page_count; 
 		console.log(sql);
-		database.query(pool, hotlist, sql).then((data) => {
+		database.query(pool, null, sql).then((data) => {
 			if (data)
 				res.jsonp(data);
 			else
