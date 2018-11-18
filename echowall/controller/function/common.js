@@ -4,9 +4,10 @@
 
 
 function arrayToString(array) {
+	array[0] = '\'' + array[0] + '\'';
 	return array.reduce((acc, item) => {
-			return  "," + '\'' + item + '\'';
-			}, '\'' + array[0] + '\'');
+			return  acc + "," + '\'' + item + '\'';
+			});
 }
 
 exports.arrayToString = arrayToString;
