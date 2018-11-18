@@ -121,11 +121,20 @@ router.get('/bykey', function(req, res) {
 // 根据 id 获取指定回音壁信息
 router.get('/byid', function(req, res) {
 	var connection = database.connection();
+	var redis_client = database.redis_connection();
 	var id =  req.query.id;
  	sql = "SELECT * FROM echowall WHERE id = ? ";
 	database.query(connection, id, sql).then((data) => {
-		if (data)
+		if (data) {
 			res.jsonp(data);
+			redis_client.zadd("view_last_twoWeek", id, 1, function(err, ret){
+				if (err) {
+					console.log(err);
+					return;
+				}
+			});
+			redis_client.quit();
+		}
 		else
 			res.jsonp({
 		    	'status': "500",
