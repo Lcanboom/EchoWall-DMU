@@ -20,11 +20,11 @@ def save_to_mysql(db, parms):
 		# 执行sql语句
 		reCount = cursor.execute(sql, parms)
 		print(reCount)
+		# 执行sql语句
+		db.commit()
 		result = "共更新mysql条数：" + str(reCount) + "  " + time.asctime(time.localtime(time.time()));
 		print(result)
 		write_to_file(result)
-		# 执行sql语句
-		db.commit()
 	except:
 		# 发生错误时回滚
 		db.rollback()
