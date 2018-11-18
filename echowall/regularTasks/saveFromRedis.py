@@ -9,7 +9,7 @@ db = pymysql.connect("localhost","root","521Loli","test_echo")
 pool = redis.ConnectionPool(host='localhost',port=6379,db=0,password='echowall')
 r = redis.StrictRedis(connection_pool=pool)
  
-def write_to_file(id, content):
+def write_to_file(content):
 	time = datetime.datetime.now().date()
 	print(time)
 	with open("/home/Carmelo/Lcanboom/echowall/regularTasks/insertlog/{time}.txt".format(time=time), 'a', encoding='utf-8') as f:
