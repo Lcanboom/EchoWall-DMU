@@ -32,7 +32,7 @@ function query(pool, values, sql) {
 			    if(err){
 			    	error = {
 			    		'status': "500",
-			    		'message':"query error"
+			    		'message':"connection query error"
 			    	}
 			    	reject(error);
 			    }
