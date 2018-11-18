@@ -127,7 +127,7 @@ router.get('/byid', function(req, res) {
 	database.query(connection, id, sql).then((data) => {
 		if (data) {
 			res.jsonp(data);
-			redis_client.zadd("view_last_twoWeek", id, 1, function(err, ret){
+			redis_client.zadd("view_last_twoWeek", 1, id, function(err, ret){
 				if (err) {
 					console.log(err);
 					return;
