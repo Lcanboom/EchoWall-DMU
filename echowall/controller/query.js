@@ -10,6 +10,7 @@ var express = require('express');
 var router = express.Router();
 //var database = require('./function/dbconnection');
 var database = require('./function/dbPoolConnection');
+var common = require('./function/common');
 var zset = "view_last_twoWeek";
 var per_page_count = 10;
 var page;
@@ -44,9 +45,7 @@ router.post('/bybox', function(req, res, next) {
 	//处理不常用信箱，额外写一个 sql 语句
 	if (box_name === "其他") {
 		var box_types = req.body.types;
-		box_types = box_types.reduce((acc, item) => {
-			return  acc + "," + '\'' + item + '\'';
-		}, '\'' + box_types[0] + '\'');
+		box_types = common.arrayToString(box_types)		// 格式化数组
 
 		sql = "SELECT id, title, box, date_format(time, '%Y-%m-%d %H:%i:%s') time \
 			FROM echowall WHERE box not in (" + box_types + ")\
