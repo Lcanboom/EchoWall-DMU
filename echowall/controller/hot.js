@@ -20,7 +20,7 @@ router.get('/byview', function(req, res){
 	var connection = database.connection();
 	var redis_client = database.redis_connection();
 	database.redis_zrevrangebyscore(redis_client, zset).then((result) => {
-		result = arrayToString(array);
+		result = arrayToString(result);
 		console.log(result);
 		res.jsonp(result);
 	})
