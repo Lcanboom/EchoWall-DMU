@@ -16,16 +16,16 @@ function arrayToString(array) {
 
 // 获取热门的回音壁信息（标准：两周时间内的浏览量降序排序）
 router.get('/byview', function(req, res){
-	var connection = database.connection();
+	var pool = database.connection();
 	var redis_client = database.redis_connection();
-	page = req.body.page;
+	page = req.query.page;
 	start = (page - 1) * per_page_count;
 	// 获取缓存中有序集合的 id 列表
 	database.redis_zrevrangebyscore(redis_client, zset).then((hotlist) => {
 		hotlist = arrayToString(hotlist);
 		console.log(hotlist);
 		sql = "select * from echowall where id in (?) order by FIELD(id, ?) LIMIT " + start + ', ' + per_page_count; 
-		database.query(connection, hotlist, sql).then((data) => {
+		database.query(pool, hotlist, sql).then((data) => {
 			if (data)
 				res.jsonp(data);
 			else
