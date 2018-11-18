@@ -138,6 +138,12 @@ router.get('/byid', function(req, res) {
 								"message": "redis zincrby error"
 							});
 						}
+						else{
+							res.jsonp({
+								"data": data,
+								"message": "redis zincrby success"
+							});							
+						}
 					});					
 				else
 					redis_client.zadd(zset, 1, id, function(err, ret){
@@ -147,6 +153,12 @@ router.get('/byid', function(req, res) {
 								"data": data,
 								"message": "redis zadd error"
 							});
+						}
+						else{
+							res.jsonp({
+								"data": data,
+								"message": "redis zadd success"
+							});								
 						}
 					});
 				redis_client.quit();
