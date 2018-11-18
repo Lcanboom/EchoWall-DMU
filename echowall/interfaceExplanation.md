@@ -280,9 +280,9 @@
 
 #### 参考
 
-	[开放能力 · 小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
+- [开放能力 · 小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
 
-	[微信小程序中用户登录和登录态维护](https://www.jianshu.com/p/c5f6c98b2685)
+- [微信小程序中用户登录和登录态维护](https://www.jianshu.com/p/c5f6c98b2685)
 
-	[微信小程序登录会话流程学习](https://segmentfault.com/a/1190000014894747#articleHeader0)
+- [微信小程序登录会话流程学习](https://segmentfault.com/a/1190000014894747#articleHeader0)
 
