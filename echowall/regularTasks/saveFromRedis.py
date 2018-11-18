@@ -10,7 +10,7 @@ r = redis.StrictRedis(connection_pool=pool)
 def write_to_file(content):
     with open('save_to_mysql_from_redis_log.txt', 'a', encoding='utf-8') as f:
         f.write(content + '\n')
- 
+
 def save_to_mysql(db, parms):
 	# 使用cursor()方法获取操作游标 
 	cursor = db.cursor()
@@ -22,6 +22,7 @@ def save_to_mysql(db, parms):
 		# 执行sql语句
 		db.commit()
 		result = '共更新mysql条数：' + reCount + time.asctime(time.localtime(time.time()))
+		print(result)
 		write_to_file(result)
 	except:
 		# 发生错误时回滚
