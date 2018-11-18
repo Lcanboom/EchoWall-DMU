@@ -24,5 +24,8 @@ module.exports = function(app){
     app.use('/comment', comment);
 
     var my = require('../controller/my');
-    app.use('/my', my);   
+    app.use('/my', my); 
+
+    var hot = require('../controller/hot');
+    app.use('/hot', hot);      
 };
