@@ -9,11 +9,11 @@ db = pymysql.connect("localhost","root","521Loli","test_echo")
 cursor = db.cursor()
  
 # SQL 更新语句
-sql = "UPDATE echowall SET viewCount = viewCount + 1 WHERE id = '66707131'"
+sql = "UPDATE echowall SET viewCount = viewCount + %s WHERE id = '%s'"
 
 try:
    # 执行sql语句
-   cursor.execute(sql)
+   cursor.execute(sql, (3, "66707131"))
    # 执行sql语句
    db.commit()
 except MySQLdb.Error as e:
