@@ -3,10 +3,12 @@
 ## 评论模块
 
 ### 添加评论
+    
+    http://domain/comment/add
+	
+#### 请求方法：post
 
-	http://domain/comment/add
-	请求方法：post
-	请求参数：如下 (除了 time 必选，建议传递 time)
+#### 请求参数：如下 (除了 time 必选，建议传递 time)
 	
 	{
 		"userid": "10008",
@@ -17,9 +19,9 @@
 		"time": "2018-12-05 08:20:00" 
 	}
 
-	返回结果
-	success:
+#### 返回结果
 
+	success:
 	{
 	    "status": 200,
 	    "message": "Transaction complete"
@@ -34,7 +36,9 @@
 ### 对评论点赞
 
 	http://domain/comment/like
-	请求方法：post
+#### 请求方法：post
+
+#### 请求参数：如下
 
 	{
 	"userid": "10008",
@@ -45,9 +49,9 @@
 	"time": "2018-12-05 08:20:00"
 	}
 
-	返回结果
-	success:
+#### 返回结果
 
+	success:
 	{
 	    "status": 200,
 	    "message": "Transaction complete"
@@ -67,7 +71,10 @@
 ### 对评论不满
 
 	http://domain/comment/dislike
-	请求方法：post
+
+#### 请求方法：post
+
+#### 请求参数：如下
 
 	{
 		"userid": "10008",
@@ -77,9 +84,9 @@
 		"time": "2018-12-05 08:20:00"
 	}
 
-	返回结果
+#### 返回结果
+	
 	success:
-
 	{
 	    "status": 200,
 	    "message": "Transaction complete"
@@ -94,11 +101,12 @@
 ### 获取指定 id 回音壁信息的评论
 
 	http://domain/comment/list?echoid=xxxxx&page=xxxx
-	请求方法：get
 
-	返回结果
+#### 请求方法：get
+
+#### 返回结果
+	
 	success:
-
 	[
 	    {
 	        "comment_id": 2,
@@ -137,7 +145,10 @@
 ### 按照近两周浏览量排行
 
 	http://domain/hot/byview?page=1
-	请求方法：get
+
+#### 请求方法：get
+
+#### 返回结果
 
 	[
 	    {
@@ -168,8 +179,10 @@
 ### 登陆
 
 	http://domain/user/login
-	请求方法：post
-	请求数据：如下
+
+#### 请求方法：post
+
+#### 请求数据：如下
 
 	{
 		"code":"xxxxxxxxxxxxxxxxx",
@@ -182,9 +195,9 @@
 					}
 	}
 
-	返回结果：
+#### 返回结果：
+	
 	success：
-
 	{
 	    "sk": "ecdccff06d08963ee93e5ce73741f949",
 	    "status": 200,
@@ -203,15 +216,17 @@
 ### 获取用户信息
 
 	http://domain/user/getUserInfo
-	请求方法：post
-	请求数据：如下	
+#### 请求方法：post
+
+#### 请求数据：如下	
 
 	{
 		"sk": "3c926b232xxxxxxx831eeb0dbcaa6a",
 		"openid": "ooLul5CxxxxxxB1-mGuKfdiag"
 	}
 
-	返回结果
+#### 返回结果
+	
 	success：
 	{
 	    "userInfo": [
@@ -239,16 +254,17 @@
 ### 清除过期的 sk
 
 	http://domain/user/deleteSk
-	请求方法：post
-	请求数据：如下
+#### 请求方法：post
+
+#### 请求数据：如下
 
 	{
 		"sk": "3c926b232599617b87831eeb0dbcaa6a"
 	}
 
-	返回结果：
+#### 返回结果：
+	
 	success:
-
 	{
 	    "isDeleted": 1,
 	    "message": "过期的 sk 已删除"
