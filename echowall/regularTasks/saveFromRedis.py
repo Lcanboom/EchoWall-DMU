@@ -28,3 +28,5 @@ def get_from_redis(client):
 
 def main():
 	get_from_redis(r)
+
+main()
