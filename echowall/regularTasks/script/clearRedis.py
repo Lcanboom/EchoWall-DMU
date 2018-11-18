@@ -9,18 +9,16 @@ import datetime
 
 pool = redis.ConnectionPool(host='localhost',port=6379,db=0,password='echowall')
 client = redis.StrictRedis(connection_pool=pool)
- 
-def write_to_file(content):
-	time = datetime.datetime.now().date()
-	with open("/home/Carmelo/Lcanboom/echowall/regularTasks/insertlog/{time}.txt".format(time=time), 'a', encoding='utf-8') as f:
-		f.write(content + '\n')
 
 def clear_redis(client, name):
 	result = client.delete(name)
-	print(result)
-
+	time = datetime.datetime.now().date()
+	if result:
+		print('clear on' + time + '\n')
+	else
+		print('clear error on' + time + '\n')
 
 def main():
-	clear_redis(client, "runoobkey")
+	clear_redis(client, "view_last_twoWeek")
 
 main()

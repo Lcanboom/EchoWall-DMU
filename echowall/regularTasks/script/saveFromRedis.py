@@ -11,7 +11,7 @@ r = redis.StrictRedis(connection_pool=pool)
  
 def write_to_file(content):
 	time = datetime.datetime.now().date()
-	with open("/home/Carmelo/Lcanboom/echowall/regularTasks/insertlog/{time}.txt".format(time=time), 'a', encoding='utf-8') as f:
+	with open("/home/Carmelo/Lcanboom/echowall/regularTasks/log/insertlog/{time}.txt".format(time=time), 'a', encoding='utf-8') as f:
 		f.write(content + '\n')
 
 def save_to_mysql(db, parms):
@@ -30,8 +30,8 @@ def save_to_mysql(db, parms):
 		# 发生错误时回滚
 		db.rollback()
 
-def get_from_redis(client):
-	view_last_twoWeek = client.zrange("view_last_twoWeek", 0, -1, withscores=True)
+def get_from_redis(client, name):
+	view_last_twoWeek = client.zrange(name, 0, -1, withscores=True)
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
@@ -39,7 +39,7 @@ def get_from_redis(client):
 		save_to_mysql(db, (increase, id))
 
 def main():
-	get_from_redis(r)
+	get_from_redis(r, "view_last_twoWeek")
 	db.close()
 
 main()
