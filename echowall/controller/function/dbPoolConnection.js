@@ -169,8 +169,7 @@ function redis_zscore(client, name, values) {
 			}
 			else
 				resolve(ret);
-		});
-		client.quit();		
+		});	
 	})
 }
 
