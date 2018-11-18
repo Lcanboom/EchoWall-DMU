@@ -158,7 +158,7 @@ function redis_hash_set(client, name, key, values) {
 }
 
 function redis_zscore(client, name, values) {
-	return new Promise((resolve, reject) => {
+	return new Promise( (resolve, reject) => {
 		client.zscore(name, values, function(err, ret){
 			if (err) {
 				console.log(err);
@@ -173,6 +173,22 @@ function redis_zscore(client, name, values) {
 	})
 }
 
+function redis_zrevrangebyscore(client, name) {
+	return new Promise( (resolve, reject) => {
+		client.zrevrangebyscore(name, "+inf", "-inf", function(err, ret){
+			if (err) {
+				console.log(err);
+				reject({
+					"status": 500,
+					"message": "zscore error"
+				})				
+			}
+			else
+				resolve(ret);
+		})
+	})
+}
+
 exports.connection = connection;
 exports.query = query;
 exports.redis_connection = redis_connection;
@@ -180,3 +196,4 @@ exports.redis_hash_set = redis_hash_set;
 exports.transaction = transaction;
 exports.getSqlParamEntity = getSqlParamEntity;
 exports.redis_zscore = redis_zscore;
+exports.redis_zrevrangebyscore = redis_zrevrangebyscore;
