@@ -157,9 +157,27 @@ function redis_hash_set(client, name, key, values) {
 	client.quit();
 }
 
+function redis_zscore(client, name, values) {
+	return new Promise((resolve, reject) => {
+		client.zscore(name, values, function(err, ret){
+			if (err) {
+				console.log(err);
+				reject({
+					"status": 500,
+					"message": "zscore error"
+				})
+			}
+			else
+				resolve(ret);
+		});
+		client.quit();		
+	})
+}
+
 exports.connection = connection;
 exports.query = query;
 exports.redis_connection = redis_connection;
 exports.redis_hash_set = redis_hash_set;
 exports.transaction = transaction;
 exports.getSqlParamEntity = getSqlParamEntity;
+exports.redis_zscore = redis_zscore;

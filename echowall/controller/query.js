@@ -123,17 +123,34 @@ router.get('/byid', function(req, res) {
 	var connection = database.connection();
 	var redis_client = database.redis_connection();
 	var id =  req.query.id;
+	var zset = "view_last_twoWeek";
  	sql = "SELECT * FROM echowall WHERE id = ? ";
 	database.query(connection, id, sql).then((data) => {
 		if (data) {
-			res.jsonp(data);
-			redis_client.zadd("view_last_twoWeek", 1, id, function(err, ret){
-				if (err) {
-					console.log(err);
-					return;
-				}
-			});
-			redis_client.quit();
+			// 判断 redis 有序集合中是否已经存在该回音壁的 id 信息
+			database.redis_zscore(redis_client, zset, id).then((err, result) => {
+				if (result)
+					redis_client.zincrby(zset, 1, id, function(err, ret){
+						if (err) {
+							console.log(err);
+							res.jsonp({
+								"data": data,
+								"message": "redis zincrby error"
+							});
+						}
+					});					
+				else
+					redis_client.zadd(zset, 1, id, function(err, ret){
+						if (err) {
+							console.log(err);
+							res.jsonp({
+								"data": data,
+								"message": "redis zadd error"
+							});
+						}
+					});
+				redis_client.quit();
+			})
 		}
 		else
 			res.jsonp({
