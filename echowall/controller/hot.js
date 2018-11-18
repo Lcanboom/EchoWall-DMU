@@ -23,6 +23,7 @@ router.get('/byview', function(req, res){
 	// 获取缓存中有序集合的 id 列表
 	database.redis_zrevrangebyscore(redis_client, zset).then((hotlist) => {
 		hotlist = arrayToString(hotlist);
+		console.log(hotlist);
 		sql = "select * from echowall where id in (?) order by FIELD(id, ?) LIMIT " + start + ', ' + per_page_count; 
 		database.query(connection, hotlist, sql).then((data) => {
 			if (data)
