@@ -1,6 +1,8 @@
 # -*- encoding: UTF-8 -*-
 import redis
 import pymysql
+import time
+
 db = pymysql.connect("localhost","root","521Loli","test_echo")
 pool = redis.ConnectionPool(host='localhost',port=6379,db=0,password='echowall')
 r = redis.StrictRedis(connection_pool=pool)
@@ -15,6 +17,8 @@ def save_to_mysql(db, parms):
 		print(reCount)
 		# 执行sql语句
 		db.commit()
+		result = '共更新mysql条数：' + reCount + time.asctime(time.localtime(time.time()))
+		write_to_file(result)
 	except:
 		# 发生错误时回滚
 		db.rollback()
@@ -26,11 +30,14 @@ def get_from_redis(client):
 		id = str(item[0], encoding="utf-8")
 		increase = item[1]
 		save_to_mysql(db, (increase, id))
-	pass
+
+def write_to_file(content):
+    with open('save_to_mysql_from_redis_log.txt', 'a', encoding='utf-8') as f:
+        f.write(content + '\n')
 
 
 def main():
 	get_from_redis(r)
 	db.close()
-	
+
 main()
