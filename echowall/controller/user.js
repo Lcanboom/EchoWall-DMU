@@ -104,7 +104,10 @@ router.post('/getUserInfo',function(req, res, next) {
 					res.json(error);
 				}					
 				else
-					res.json(result); 
+					res.json({
+						'userInfo': result,
+						'status': 200
+					}); 
 			}, (error) => {
 				res.json(error);
 			})
