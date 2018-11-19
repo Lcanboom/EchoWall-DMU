@@ -132,32 +132,24 @@ router.get('/byid', function(req, res) {
 					redis_client.zincrby(zset, 1, id, function(err, ret){
 						if (err) {
 							console.log(err);
-							res.jsonp({
-								"data": data,
-								"aboutredis": "redis zincrby error"
-							});
+							data["aboutRedis"] = "redis zincrby error"
+							res.jsonp(data);
 						}
 						else{
-							res.jsonp({
-								"data": data,
-								"aboutredis": "redis zincrby success"
-							});							
+							data["aboutRedis"] = "redis zincrby success"
+							res.jsonp(data);							
 						}
 					});					
 				else
 					redis_client.zadd(zset, 1, id, function(err, ret){
 						if (err) {
 							console.log(err);
-							res.jsonp({
-								"data": data,
-								"aboutredis": "redis zadd error"
-							});
+							data["aboutRedis"] = "redis zadd error"
+							res.jsonp(data);
 						}
 						else{
-							res.jsonp({
-								"data": data,
-								"aboutredis": "redis zadd success"
-							});								
+							data["aboutRedis"] = "redis zadd success"						
+							res.jsonp(data);								
 						}
 					});
 				redis_client.quit();
