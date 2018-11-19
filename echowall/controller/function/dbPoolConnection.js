@@ -37,13 +37,12 @@ function query(pool, values, sql) {
 			    	reject(error);
 			    }
 			    else{
-			    	/*
 			    	result = {
 			    		'status': "200",
 			    		'message': "query success",
 			    		data: data
-			    	}*/
-					resolve(data);
+			    	}
+					resolve(result);
 			    }
 			    // When done with the connection, release it.	    
 
