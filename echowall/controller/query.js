@@ -134,13 +134,13 @@ router.get('/byid', function(req, res) {
 							console.log(err);
 							res.jsonp({
 								"data": data,
-								"message": "redis zincrby error"
+								"aboutredis": "redis zincrby error"
 							});
 						}
 						else{
 							res.jsonp({
 								"data": data,
-								"message": "redis zincrby success"
+								"aboutredis": "redis zincrby success"
 							});							
 						}
 					});					
@@ -150,13 +150,13 @@ router.get('/byid', function(req, res) {
 							console.log(err);
 							res.jsonp({
 								"data": data,
-								"message": "redis zadd error"
+								"aboutredis": "redis zadd error"
 							});
 						}
 						else{
 							res.jsonp({
 								"data": data,
-								"message": "redis zadd success"
+								"aboutredis": "redis zadd success"
 							});								
 						}
 					});
