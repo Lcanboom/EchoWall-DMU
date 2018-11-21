@@ -30,13 +30,29 @@ def save_to_mysql(db, parms):
 		# 发生错误时回滚
 		db.rollback()
 
+def query_echo_byId(db, id):
+	# 使用cursor()方法获取操作游标 
+	cursor = db.cursor()
+	sql = "select viewCount from echowall WHERE id = %s" 
+	try:
+		# 执行sql语句
+		reCount = cursor.execute(sql, id)
+		data = cursor.fetchone()
+		db.commit()
+		print(data)
+		print(type(data))
+	except:
+		# 发生错误时回滚
+		db.rollback()	
+
 def get_from_redis(client, name):
 	view_last_twoWeek = client.zrange(name, 0, -1, withscores=True)
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
 		increase = item[1]
-		save_to_mysql(db, (increase, id))
+		#save_to_mysql(db, (increase, id))
+		query_echo_byId(db, id)
 
 def main():
 	get_from_redis(r, "view_last_twoWeek_forTest")

@@ -11,7 +11,7 @@ var router = express.Router();
 //var database = require('./function/dbconnection');
 var database = require('./function/dbPoolConnection');
 var common = require('./function/common');
-var zset = "view_last_twoWeek";
+var zset = "view_last_twoWeek_forTest";
 var per_page_count = 10;
 var page;
 var start;

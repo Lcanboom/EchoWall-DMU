@@ -19,6 +19,6 @@ def clear_redis(client, name):
 		print('clear error on' + time + '\n')
 
 def main():
-	clear_redis(client, "view_last_twoWeek")
+	clear_redis(client, "view_last_twoWeek_forTest")
 
 main()
