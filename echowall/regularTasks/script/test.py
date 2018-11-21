@@ -39,8 +39,8 @@ def query_echo_byId(db, id):
 		reCount = cursor.execute(sql, id)
 		data = cursor.fetchone()
 		db.commit()
-		print(data)
-		print(type(data))
+		print(data[0])
+		print(type(data[0]))
 	except:
 		# 发生错误时回滚
 		db.rollback()	
