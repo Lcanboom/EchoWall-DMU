@@ -21,7 +21,7 @@ def save_to_mysql(db, parms):
 	sql_add = "UPDATE echowall SET viewCount = viewCount + %s WHERE id = %s"
 	try:
 		# 事务开始
-		connection.begin()
+		db.begin()
 		cursor.execute(sql_id, parms[1]) 
 		data = cursor.fetchone()
 		increase_viewCount = parms[0] - data[0]
