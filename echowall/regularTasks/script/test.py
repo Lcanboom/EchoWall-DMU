@@ -27,7 +27,7 @@ def save_to_mysql(db, parms):
 		increase_viewCount = parms[0] - data[0]
 		# 更新
 		reCount = cursor.execute(sql_add, (increase_viewCount, parms[1]))
-		result = "id：" + str(parms[1]) + "  " + "新增浏览数：" + str(increase_viewCount) + time.asctime(time.localtime(time.time()));
+		result = "id：" + str(parms[1]) + "  " + "新增浏览数：" + str(increase_viewCount) + "  " + time.asctime(time.localtime(time.time()));
 		print(result)
 		write_to_file(result)
 	except Exception as e:
