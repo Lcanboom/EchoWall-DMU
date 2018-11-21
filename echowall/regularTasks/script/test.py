@@ -27,13 +27,15 @@ def save_to_mysql(db, parms):
 		increase_viewCount = parms[0] - data[0]
 		# 更新
 		reCount = cursor.execute(sql_add, (increase_viewCount, parms[1]))
-		db.commit()
 		result = "id：" + str(parms[1]) + "  " + "新增浏览数：" + increase_viewCount + time.asctime(time.localtime(time.time()));
 		print(result)
 		write_to_file(result)
-	except:
-		# 发生错误时回滚
-		db.rollback()
+	except Exception as e:
+		db.rollback()  # 事务回滚
+		print('事务处理失败', e)
+	else:
+		db.commit()  # 事务提交
+		print('-------事务处理成功---------')
 
 def query_echo_byId(db, id):
 	# 使用cursor()方法获取操作游标 
@@ -64,13 +66,3 @@ def main():
 	db.close()
 
 main()
-
-
-try:
-
-except Exception as e:
-    connect.rollback()  # 事务回滚
-    print('事务处理失败', e)
-else:
-    connect.commit()  # 事务提交
-    print('事务处理成功', cursor.rowcount)
