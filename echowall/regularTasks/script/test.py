@@ -88,8 +88,4 @@ def main():
 		print("yes")
 	else:
 		print("no")
-	if data.has_key('675432'):
-		print("yes")
-	else:
-		print("no")
 main()
