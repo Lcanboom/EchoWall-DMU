@@ -76,7 +76,11 @@ def read_yesterday_csv(fileName):
 	csvFile.close()
 	return result
 
-
+def getYesterday(): 
+    today = datetime.date.today() 
+    oneday = datetime.timedelta(days=1) 
+    yesterday = today - oneday  
+    return yesterday
 
 def main():
 	get_from_redis(r, "view_last_twoWeek_forTest")
@@ -88,4 +92,7 @@ def main():
 		print("yes")
 	else:
 		print("no")
+	# 输出
+	print(getYesterday())
+	
 main()
