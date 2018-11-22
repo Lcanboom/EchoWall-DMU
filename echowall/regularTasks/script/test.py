@@ -9,7 +9,6 @@ import csv
 db = pymysql.connect("localhost","root","521Loli","test_echo")
 pool = redis.ConnectionPool(host='localhost',port=6379,db=0,password='echowall')
 r = redis.StrictRedis(connection_pool=pool)
-yesterday = getYesterday()
  
 def write_to_file(content):
 	time = datetime.datetime.now().date()
@@ -39,13 +38,13 @@ def save_to_mysql(db, parms):
 		db.commit()  # 事务提交
 		print('-------事务处理成功---------')
 
-def get_from_redis(client, name):
+def get_from_redis(client, name, csvFile):
 	view_last_twoWeek = client.zrange(name, 0, -1, withscores=True)
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
 		increase = item[1]
-		write_yesterday_toCsv(yesterday, [id, increase])
+		write_yesterday_toCsv(csvFile, [id, increase])
 		#save_to_mysql(db, (increase, id))
 
 def write_yesterday_toCsv(fileName, parms):
@@ -79,7 +78,8 @@ def getYesterday():
     return yesterday.strftime('%Y-%m-%d')
 
 def main():
-	get_from_redis(r, "view_last_twoWeek_forTest")
+	yesterday = getYesterday()
+	get_from_redis(r, "view_last_twoWeek_forTest", yesterday)
 	db.close()
 	data = read_yesterday_csv(yesterday)
 	print(data['68377513'])
