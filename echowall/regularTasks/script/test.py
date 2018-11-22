@@ -51,7 +51,7 @@ def write_yesterday_toCsv(fileName, parms):
 	# 文件头，一般就是数据名
 	#fileHeader = ["echoid", "viewCount"]
 	# 写入数据
-	csvFile = open(fileName, "a+")
+	csvFile = open("/home/Carmelo/Lcanboom/echowall/regularTasks/log/yesterday/{fileName}.txt".format(fileName=fileName), "a+")
 	writer = csv.writer(csvFile)
 
 	# 写入的内容都是以列表的形式传入函数
