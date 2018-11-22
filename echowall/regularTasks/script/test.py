@@ -44,10 +44,10 @@ def get_from_redis(client, name, csvFile):
 		print(item)
 		id = str(item[0], encoding="utf-8")
 		increase = item[1]
-		write_yesterday_toCsv(csvFile, [id, increase])
-		#save_to_mysql(db, (increase, id))
+		write_toCsv(csvFile, [id, increase])
+		save_to_mysql(db, (increase, id))
 
-def write_yesterday_toCsv(fileName, parms):
+def write_toCsv(fileName, parms):
 	# 文件头，一般就是数据名
 	#fileHeader = ["echoid", "viewCount"]
 	# 写入数据
@@ -77,11 +77,16 @@ def getYesterday():
     yesterday = today - oneday  
     return yesterday.strftime('%Y-%m-%d')
 
+def getToday():
+    today = datetime.date.today() 
+    return today.strftime('%Y-%m-%d')	
+
 def main():
-	yesterday = getYesterday()
-	get_from_redis(r, "view_last_twoWeek_forTest", yesterday)
+	#yesterday = getYesterday()
+	today = getToday()
+	get_from_redis(r, "view_last_twoWeek_forTest", today)
 	db.close()
-	data = read_yesterday_csv(yesterday)
+	data = read_yesterday_csv(today)
 	print(data['68377513'])
 	print(type(data['68377513']))
 	#if '675432' in data.keys():
@@ -89,7 +94,4 @@ def main():
 	#else:
 	#	print("no")
 	# 输出
-	print(type(getYesterday()))
-	print(getYesterday())
-
 main()
