@@ -3,6 +3,7 @@ import redis
 import pymysql
 import time
 import datetime
+import csv
 
 
 db = pymysql.connect("localhost","root","521Loli","test_echo")
@@ -43,7 +44,22 @@ def get_from_redis(client, name):
 		print(item)
 		id = str(item[0], encoding="utf-8")
 		increase = item[1]
-		save_to_mysql(db, (increase, id))
+		write_yesterday_toCsv([id, increase])
+		#save_to_mysql(db, (increase, id))
+
+def write_yesterday_toCsv(parms):
+	# 文件头，一般就是数据名
+	#fileHeader = ["echoid", "viewCount"]
+	# 写入数据
+
+	csvFile = open("yesterday.csv", "w")
+	writer = csv.writer(csvFile)
+
+	# 写入的内容都是以列表的形式传入函数
+	#writer.writerow(fileHeader)
+	writer.writerow(parms)
+	csvFile.close()
+
 
 def main():
 	get_from_redis(r, "view_last_twoWeek_forTest")
