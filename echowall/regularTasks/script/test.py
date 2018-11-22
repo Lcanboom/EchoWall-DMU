@@ -19,7 +19,7 @@ def save_to_mysql(db, parms):
 	# 获取昨天的数据
 	yesterday = getYesterday()
 	data = read_yesterday_csv(yesterday)
-	if parms[1] in data.keys() and parms[0] > float(data[parms[1]]):	# 排除两周后缓存数据清 0
+	if parms[1] in data.keys() and parms[0] >= float(data[parms[1]]):	# 排除两周后缓存数据清 0
 		increaseCount = parms[0] - float(data[parms[1]])				# 今天 - 昨天 = 增量
 	else:
 		increaseCount = parms[0]
@@ -90,7 +90,5 @@ def main():
 	get_from_redis(r, "view_last_twoWeek_forTest", today)
 	db.close()
 	#data = read_yesterday_csv(today)
-	print(data['68377513'])
-	print(type(data['68377513']))
 
 main()
