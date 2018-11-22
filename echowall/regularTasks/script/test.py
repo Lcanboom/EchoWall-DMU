@@ -40,23 +40,23 @@ def save_to_mysql(db, parms):
 
 def get_from_redis(client, name):
 	view_last_twoWeek = client.zrange(name, 0, -1, withscores=True)
+	yesterday = getYesterday()
 	for item in view_last_twoWeek:
 		print(item)
 		id = str(item[0], encoding="utf-8")
 		increase = item[1]
-		write_yesterday_toCsv([id, increase])
+		write_yesterday_toCsv(yesterday, [id, increase])
 		#save_to_mysql(db, (increase, id))
 
-def write_yesterday_toCsv(parms):
+def write_yesterday_toCsv(fileName, parms):
 	# 文件头，一般就是数据名
 	#fileHeader = ["echoid", "viewCount"]
 	# 写入数据
-
-	csvFile = open("yesterday.csv", "a+")
+	csvFile = open(fileName, "a+")
 	writer = csv.writer(csvFile)
 
 	# 写入的内容都是以列表的形式传入函数
-	#writer.writerow(fileHeader)
+	#writer.writerow(fileHeader) 省略了头信息
 	writer.writerow(parms)
 	csvFile.close()
 
@@ -64,13 +64,9 @@ def read_yesterday_csv(fileName):
 	# 读取csv至字典
 	csvFile = open(fileName, "r")
 	reader = csv.reader(csvFile)
-
 	# 建立空字典
 	result = {}
 	for item in reader:
-	    # 忽略第一行
-	    #if reader.line_num == 1:
-	        #continue
 	    print(type(item))
 	    result[item[0]] = item[1]
 	csvFile.close()
@@ -88,11 +84,10 @@ def main():
 	data = read_yesterday_csv("yesterday.csv")
 	print(data['68377513'])
 	print(type(data['68377513']))
-	if '675432' in data.keys():
-		print("yes")
-	else:
-		print("no")
+	#if '675432' in data.keys():
+	#	print("yes")
+	#else:
+	#	print("no")
 	# 输出
-	print(getYesterday())
 
 main()
