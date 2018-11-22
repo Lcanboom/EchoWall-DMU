@@ -84,8 +84,12 @@ def main():
 	data = read_yesterday_csv("yesterday.csv")
 	print(data['68377513'])
 	print(type(data['68377513']))
-	if data["6837"]:
-		pass
+	if '675432' in data.keys():
+		print("yes")
 	else:
-		print("无这个值")
+		print("no")
+	if data.has_key('675432'):
+		print("yes")
+	else:
+		print("no")
 main()
