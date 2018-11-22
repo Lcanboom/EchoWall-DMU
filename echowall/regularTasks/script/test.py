@@ -61,7 +61,7 @@ def write_yesterday_toCsv(fileName, parms):
 
 def read_yesterday_csv(fileName):
 	# 读取csv至字典
-	csvFile = open(fileName, "r")
+	csvFile = open("/home/Carmelo/Lcanboom/echowall/regularTasks/log/yesterday/{fileName}.txt".format(fileName=fileName), "r")
 	reader = csv.reader(csvFile)
 	# 建立空字典
 	result = {}
