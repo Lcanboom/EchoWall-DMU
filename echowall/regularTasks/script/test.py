@@ -76,7 +76,7 @@ def getYesterday():
     today = datetime.date.today() 
     oneday = datetime.timedelta(days=1) 
     yesterday = today - oneday  
-    return yesterday
+    return yesterday.strftime('%Y-%m-%d')
 
 def main():
 	get_from_redis(r, "view_last_twoWeek_forTest")
@@ -89,5 +89,7 @@ def main():
 	#else:
 	#	print("no")
 	# 输出
+	print(type(getYesterday()))
+	print(getYesterday())
 
 main()
