@@ -52,7 +52,7 @@ def write_yesterday_toCsv(parms):
 	#fileHeader = ["echoid", "viewCount"]
 	# 写入数据
 
-	csvFile = open("yesterday.csv", "w")
+	csvFile = open("yesterday.csv", "a")
 	writer = csv.writer(csvFile)
 
 	# 写入的内容都是以列表的形式传入函数
