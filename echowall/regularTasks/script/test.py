@@ -60,9 +60,27 @@ def write_yesterday_toCsv(parms):
 	writer.writerow(parms)
 	csvFile.close()
 
+def read_yesterday_csv(fileName):
+	# 读取csv至字典
+	csvFile = open(fileName, "r")
+	reader = csv.reader(csvFile)
+
+	# 建立空字典
+	result = {}
+	for item in reader:
+	    # 忽略第一行
+	    #if reader.line_num == 1:
+	        #continue
+	    print(type(item))
+	    result[item[0]] = item[1]
+	csvFile.close()
+	print(result)
+
+
 
 def main():
 	get_from_redis(r, "view_last_twoWeek_forTest")
 	db.close()
+	read_yesterday_csv("yesterday.csv")
 
 main()
