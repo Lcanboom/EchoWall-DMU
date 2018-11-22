@@ -19,7 +19,7 @@ def save_to_mysql(db, parms):
 	# 获取昨天的数据
 	yesterday = getYesterday()
 	data = read_yesterday_csv(yesterday)
-	if parms[1] in data.keys() && parms[0] > data[parms[1]]:	# 排除两周后缓存数据清 0
+	if parms[1] in data.keys() and parms[0] > data[parms[1]]:	# 排除两周后缓存数据清 0
 		increaseCount = parms[0] - data[parms[1]]				# 今天 - 昨天 = 增量
 	else：
 		increaseCount = parms[0]
