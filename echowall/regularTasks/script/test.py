@@ -74,13 +74,14 @@ def read_yesterday_csv(fileName):
 	    print(type(item))
 	    result[item[0]] = item[1]
 	csvFile.close()
-	print(result)
+	return result
 
 
 
 def main():
 	get_from_redis(r, "view_last_twoWeek_forTest")
 	db.close()
-	read_yesterday_csv("yesterday.csv")
-
+	data = read_yesterday_csv("yesterday.csv")
+	print(data['68377513'])
+	print(type(data['68377513']))
 main()
